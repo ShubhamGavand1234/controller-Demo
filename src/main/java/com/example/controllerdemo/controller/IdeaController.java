@@ -6,7 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,12 +40,25 @@ public class IdeaController {
         IDEA_MAP.put(ideaResource.getId(), ideaResource);
         return  new ResponseEntity(ideaResource, HttpStatus.CREATED);
     }
-
+//Get by Id
     @GetMapping(value = "/ideas/{X}")
     public ResponseEntity fetchIdeaBasedOnId(@PathVariable(name="X") int id){
         return new ResponseEntity( IDEA_MAP.get(id), HttpStatus.OK);
     }
+//Get all ideas
+    @GetMapping(value = "/ideas", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity fetchAllIdeas(){
+        List<IdeaResource>  ideas = new ArrayList<>();
+        ideas.addAll(IDEA_MAP.values());
 
-
+    return  new ResponseEntity(ideas, HttpStatus.OK);
+    }
+// Update Method
+    @PutMapping(value = "/ideas/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateIdeaBasedOnId(@PathVariable(name="id") int Id, @RequestBody IdeaResource ideaResource){
+        System.out.println(ideaResource);
+        IDEA_MAP.put(Id,ideaResource);
+        return new ResponseEntity(ideaResource, HttpStatus.ACCEPTED);
+    }
 
 }
