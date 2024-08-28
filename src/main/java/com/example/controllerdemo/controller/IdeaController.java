@@ -60,5 +60,11 @@ public class IdeaController {
         IDEA_MAP.put(Id,ideaResource);
         return new ResponseEntity(ideaResource, HttpStatus.ACCEPTED);
     }
+//Delete Method
 
+    @DeleteMapping(value = "/ideas/{id}")
+    public ResponseEntity deleteById(@PathVariable(name="id") int id){
+        IDEA_MAP.remove(id);
+        return new ResponseEntity(null, HttpStatus.OK);
+    }
 }
